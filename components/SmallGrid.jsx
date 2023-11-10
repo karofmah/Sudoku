@@ -7,7 +7,9 @@ export default function SmallGrid({gridIndex, gridList}) {
    
         <View style {...styles.container} >
             {gridList[gridIndex].map((item,index) => (
-                <TextInput style={styles.cell} key={index} value={item.toString()}  />
+              item == 0 ? 
+              <TextInput style={styles.cell} key={index} keyboardType="number-pad" maxLength={1} /> : 
+              <Text style={styles.cell} key={index} >{item.toString()}</Text>
         ))}
         </View>
   )

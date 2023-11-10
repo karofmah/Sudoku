@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: '100%'
+    width: '100%',
+    marginTop: 20
   },
 });
