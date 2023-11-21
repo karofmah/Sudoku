@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
+    "@react-native-async-storage/async-storage": "^1.19.6",
     "@types/react": "~18.2.14",
     "axios": "^1.6.2",
     "expo": "~49.0.15",

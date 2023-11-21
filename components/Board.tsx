@@ -15,7 +15,6 @@ export default function Board({gridList}: any) {
           group.push(gridList[k][l]);
         }
       }
-      
       sudokuGroups.push(group);
     }
   }
