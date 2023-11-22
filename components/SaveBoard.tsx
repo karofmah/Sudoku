@@ -65,9 +65,6 @@ export default function SaveBoard() {
     <>
     <View style={styles.container}>
       
-       {(count > 0) && <Text>{currentDifficulty}</Text> }    
-        {count > 0 && <Board gridList={(currentBoard)}/>}
-
         <View style= {styles.container}>
           <Pressable style={styles.button} onPress={()=>setCount(count + 1)}>
             <Text>Generate board</Text>
@@ -85,6 +82,9 @@ export default function SaveBoard() {
               </Pressable>
               
               </View>
+              {(count > 0) && <Text>{currentDifficulty}</Text> }    
+        {count > 0 && <Board gridList={currentBoard} isEditable={false}/>}
+
        
         </View>
         

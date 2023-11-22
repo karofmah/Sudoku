@@ -49,7 +49,7 @@ export default function Play() {
               </Pressable>
               </View>
         {(count > 0) && <Text>{currentDifficulty}</Text> }    
-        {count > 0 && <Board gridList={(currentBoard)}/>}
+        {count > 0 && <Board gridList={currentBoard} isEditable={true} />}
               </View>
         
     </>

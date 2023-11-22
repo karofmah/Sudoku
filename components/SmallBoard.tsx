@@ -1,20 +1,19 @@
 import { StyleSheet, TextInput,Text, View } from 'react-native';
 
-export default function SmallBoard({gridGroup}: any){
-
+export default function SmallBoard(props:any){
 
     return(
 
         <View style={styles.container}>
-             {gridGroup.map((item, index) => (
+             {props.gridGroup.map((item, index) => (
       <View style={styles.cell} key={index}>
-        {item == 0 ? (
+        {(props.isEditable && item === 0) ? (
           <TextInput
             keyboardType="number-pad"
             maxLength={1}
           />
         ) : (
-          <Text >{item.toString()}</Text>
+          <Text >{item !==0 && item.toString()}</Text>
         )}
       </View>
     ))}
