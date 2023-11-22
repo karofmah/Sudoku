@@ -1,7 +1,22 @@
 import { StyleSheet, TextInput,Text, View } from 'react-native';
+import { useState,useEffect } from 'react';
 
 export default function SmallBoard(props:any){
-  const newList = ["0","0","0","0","0","0","0","0","0"]
+  const [newList] = useState([0,0,0,0,0,0,0,0,0])
+
+  const oldList = props.oldList
+
+  const sendListToParent = () => {
+  console.log("oldold",oldList)
+  
+    for(let i = 0; i < oldList.length; i++){
+      if(newList[i] !== 0 && oldList[i] ===0){
+        oldList[i] = newList[i]
+
+      }
+    }
+    props.sendListToParent(oldList,props.index);
+  };
 
     return(
 
@@ -14,10 +29,12 @@ export default function SmallBoard(props:any){
             maxLength={1}
             onChangeText={(val)=>{
               if(val !== ""){
-                newList[index] = val
-                console.log(newList)
+                newList[index] = parseInt(val)
+                console.log("new",newList)
+                console.log("old",oldList)
                 console.log(newList.length)
                 console.log("index",index)
+                sendListToParent()
               }
             }}
           />

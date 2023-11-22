@@ -9,7 +9,8 @@ export default function Play() {
   const[count,setCount] = useState(0)
   const [currentBoard, setCurrentBoard] = useState([]);
   const [currentDifficulty, setCurrentDifficulty] = useState("");
- 
+  const[currentBoardData, setCurrentBoardData] = useState({});
+
   return(
     <>
     <View style={styles.container}>
@@ -21,6 +22,7 @@ export default function Play() {
                 const newBoard = await getRandomBoard('Easy')
                 setCurrentBoard(newBoard.value)
                 setCurrentDifficulty(newBoard.difficulty)
+                setCurrentBoardData(newBoard)
                 setCount(count + 1)
               }
               }>
@@ -32,6 +34,7 @@ export default function Play() {
                   const newBoard = await getRandomBoard('Medium')
                   setCurrentBoard(newBoard.value)
                   setCurrentDifficulty(newBoard.difficulty)
+                  setCurrentBoardData(newBoard)
                   setCount(count + 1)
                 }
                 }>
@@ -42,6 +45,7 @@ export default function Play() {
                   const newBoard = await getRandomBoard('Hard')
                   setCurrentBoard(newBoard.value)
                   setCurrentDifficulty(newBoard.difficulty)
+                  setCurrentBoardData(newBoard)
                   setCount(count + 1)
                 }
                 }>
@@ -49,7 +53,7 @@ export default function Play() {
               </Pressable>
               </View>
         {(count > 0) && <Text>{currentDifficulty}</Text> }    
-        {count > 0 && <Board gridList={currentBoard} isEditable={true} />}
+        {count > 0 && <Board gridList={currentBoard} isEditable={true} boardData={currentBoardData} />}
               </View>
         
     </>
