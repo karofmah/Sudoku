@@ -87,11 +87,10 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       flexWrap: 'wrap',
     },
-button: {
-        borderColor: 'black',
-        borderWidth: 1,
-        margin:20,
-        width:100
+    button: {
+      borderColor: 'black',
+      borderWidth: 1,
+      margin:20,
+      width:100
     },
-  
   });

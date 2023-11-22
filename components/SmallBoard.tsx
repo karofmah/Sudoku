@@ -1,6 +1,7 @@
 import { StyleSheet, TextInput,Text, View } from 'react-native';
 
 export default function SmallBoard(props:any){
+  const newList = ["0","0","0","0","0","0","0","0","0"]
 
     return(
 
@@ -11,6 +12,14 @@ export default function SmallBoard(props:any){
           <TextInput
             keyboardType="number-pad"
             maxLength={1}
+            onChangeText={(val)=>{
+              if(val !== ""){
+                newList[index] = val
+                console.log(newList)
+                console.log(newList.length)
+                console.log("index",index)
+              }
+            }}
           />
         ) : (
           <Text >{item !==0 && item.toString()}</Text>
