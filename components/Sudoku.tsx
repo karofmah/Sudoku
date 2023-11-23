@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState,useEffect } from 'react';
 
 
-export default function Play() {
+export default function Sudoku() {
   const[count,setCount] = useState(0)
   const [currentBoard, setCurrentBoard] = useState([]);
   const [currentDifficulty, setCurrentDifficulty] = useState("");
@@ -14,8 +14,6 @@ export default function Play() {
   return(
     <>
     <View style={styles.container}>
-      
-
         <View style= {styles.container}>
 
               <Pressable style={styles.button} onPress={ async ()=>{
@@ -70,17 +68,13 @@ async function getRandomBoard(difficulty: string){
     boardData.push(JSON.parse(element[1]))
   });
   
-  console.log("boardData: ",boardData)
   boardData.forEach(element => {
     element.difficulty === difficulty ? BoardList.push(element) : ""
   });
-  console.log("BoardList: ",BoardList)
   
   const randomBoardIndex = Math.floor(Math.random() * BoardList.length);
   
-  console.log(randomBoardIndex)
   
-  console.log("newboard",BoardList[randomBoardIndex].value)
   return BoardList[randomBoardIndex]
   
   }

@@ -7,7 +7,12 @@ export default function Board(props:any) {
   const [receivedList, setReceivedList] = useState([]);
   const [solved, setSolved] = useState(false)
   const [answerClicked, setAnswerClicked] = useState(false)
+  const [mark,setMark] = useState(false)
 
+  useEffect(()=>{
+    setAnswerClicked(false)
+
+  },[props.gridList])
   
   const [answerList] = useState(
     [[0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -47,7 +52,7 @@ export default function Board(props:any) {
     <>
     <View style={styles.container}>
     {sudokuGroups.map((item,index) => (
-    <SmallBoard key = {index} gridGroup={item} isEditable={props.isEditable} oldList={item} index={index} sendListToParent={receiveNewList}/>
+    <SmallBoard key = {index} gridGroup={item} isEditable={props.isEditable} oldList={item} index={index} sendListToParent={receiveNewList} board={props.gridList}/>
         ))}
       
     </View>
@@ -64,7 +69,7 @@ export default function Board(props:any) {
       }
       
 
-      //setSolved(equals(props.boardData.solution, answerListConverted))
+      setSolved(equals(props.boardData.solution, answerListConverted))
       const solution=
       [[3, 9, 6, 5, 7, 2, 1, 4, 8], 
       [2, 1, 7, 4, 6, 8, 5, 3, 9], 
@@ -76,23 +81,26 @@ export default function Board(props:any) {
       [1, 7, 4, 2, 9, 6, 3, 8, 5], 
       [6, 5, 2, 8, 1, 3, 9, 7, 4]]
       
-
-      setSolved(equals(props.boardData.solution,solution))
+/*
+      //setSolved(equals(props.boardData.solution,solution))
       console.log(equals(props.boardData.solution,solution))
       console.log(solved)
 
       console.log(answerListConverted)
       console.log("before conversion",answerList)
 
-      console.log(props.boardData.solution)
+      console.log(props.boardData.solution)*/
     }} />
   }
+
   { (answerClicked && solved) &&
   <Text>Congratulations, your answer is correct!</Text>
   }
   { (answerClicked && !solved) &&
   <Text>Unfortunately your answer is incorrect</Text>
   }
+    {props.isEditable && <Text>Press 0 to mark cell, press any other key to unmark cell</Text>}
+
     </>
   )
 }
