@@ -14,18 +14,6 @@ const storeData = async (id:number,value:any) => {
   }
 };
 
-async function retrieveData(id:number){
-  try {
-    console.log("retrieved")
-    const jsonValue = await AsyncStorage.getItem(id.toString());
-    console.log("bom",jsonValue != null ? JSON.parse(jsonValue) : null)
-    console.log(jsonValue)
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (e) {
-    // error reading value
-  }
-}
-
 
 export default function SaveBoard() {
 
