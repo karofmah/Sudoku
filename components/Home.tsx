@@ -128,10 +128,12 @@ export default function Home({navigation}) {
     
     return(
         <>
+        <View>
+
         <Button title={t('play')}onPress={() => navigation.navigate('Sudoku')}/>
         <Button title={t('add-boards')} onPress={() => navigation.navigate('Add board')}/>
         <DropDownPicker
-    
+        style={styles.dropdown}
         open={open}
         value={value}
         items={items}
@@ -139,6 +141,8 @@ export default function Home({navigation}) {
         setValue={setValue}
         setItems={setItems}
       />
+      </View>
+
         </>
     )
 }
@@ -148,4 +152,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       flexWrap: 'wrap',
     },
+    dropdown:{
+      marginTop:400
+    }
   });

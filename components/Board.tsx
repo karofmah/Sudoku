@@ -2,19 +2,21 @@ import { StyleSheet, TextInput,Text, View,Button } from 'react-native';
 import SmallBoard from './SmallBoard';
 import { useState,useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { use } from 'i18next';
 
 export default function Board(props:any) {
   const [receivedList, setReceivedList] = useState([]);
   const [solved, setSolved] = useState(false)
   const [answerClicked, setAnswerClicked] = useState(false)
-  const [mark,setMark] = useState(false)
+  const [currentDifficulty,setCurrentDifficulty] = useState("")
 
   const {t} = useTranslation()
 
   useEffect(()=>{
     setAnswerClicked(false)
-
-  },[props.gridList])
+    const difficulty = props.boardData.difficulty
+    setCurrentDifficulty(difficulty)
+  },[props.boardData])
   
   const [answerList] = useState(
     [[0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -53,11 +55,14 @@ export default function Board(props:any) {
   return(
     <>
     <View style={styles.container}>
+    {<Text style={styles.difficulty}>{t(`difficulty.${currentDifficulty}`)}</Text> }    
+      <View style={styles.boardContainer}>
     {sudokuGroups.map((item,index) => (
     <SmallBoard key = {index} gridGroup={item} isEditable={props.isEditable} oldList={item} index={index} sendListToParent={receiveNewList} board={props.gridList}/>
         ))}
-      
-    </View>
+        </View>
+        <View>
+
     {props.isEditable &&
     <Button title={t("check-answer")} onPress={()=>{
       setAnswerClicked(true)
@@ -83,7 +88,7 @@ export default function Board(props:any) {
       [1, 7, 4, 2, 9, 6, 3, 8, 5], 
       [6, 5, 2, 8, 1, 3, 9, 7, 4]]
       
-/*
+/* TEST THAT IT WORKS WITH THIS CODE
       //setSolved(equals(props.boardData.solution,solution))
       console.log(equals(props.boardData.solution,solution))
       console.log(solved)
@@ -102,6 +107,9 @@ export default function Board(props:any) {
   <Text>{t("incorrect")}</Text>
   }
     {props.isEditable && <Text>{t('info')}</Text>}
+    </View>
+
+    </View>
 
     </>
   )
@@ -109,9 +117,17 @@ export default function Board(props:any) {
 const equals = (a:number[][], b:number[][]) => JSON.stringify(a) === JSON.stringify(b);
 
 const styles = StyleSheet.create({
-    container: {
+    boardContainer: {
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
+      height:250
     },
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    difficulty:{
+      fontSize:20
+    }
   });

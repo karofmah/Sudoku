@@ -6,7 +6,7 @@ export default function SmallBoard(props:any){
   const [newList] = useState([0,0,0,0,0,0,0,0,0])
   const [style,setStyle] = useState([{},{},{},{}, {}, {}, {}, {}, {}])
   const emptyStyleList = [{},{},{},{}, {}, {}, {}, {}, {}]
-
+  const [mark, setMark] = useState(0)
   const oldList = props.oldList
 
   const sendListToParent = () => {
@@ -24,13 +24,15 @@ export default function SmallBoard(props:any){
     return(
 
         <View style={styles.container}>
+          
              {props.gridGroup.map((item, index) => (
       <View style={styles.cell} key={index}>
         {(props.isEditable && item === 0) ? (
           <TextInput
-            style={style[index]}
+            style={{...styles.text  ,...style[index]}}
             keyboardType="number-pad"
             maxLength={1}
+            
             onKeyPress={(e)=>{
               const updatedStyleList = [...style]
 
@@ -76,9 +78,13 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         justifyContent:'center',
-        width:'33.3%'
+        width:'33.3%',
+        height: '33.3%',
+        fontSize:30
+    },
+    text:{
     },
     mark:{
-      backgroundColor:'yellow'
+      color:'orange',
     }
   });

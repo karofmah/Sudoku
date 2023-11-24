@@ -21,7 +21,6 @@ export default function SaveBoard() {
   const[count,setCount] = useState(0)
   const [currentBoard, setCurrentBoard] = useState([]);
   const[currentBoardData, setCurrentBoardData] = useState({});
-  const [currentDifficulty, setCurrentDifficulty] = useState("");
   const {t} = useTranslation(); 
 
     useEffect(() => {
@@ -33,10 +32,9 @@ export default function SaveBoard() {
             return error
           })
           var boardData = json.newboard.grids[0]
-
+          
           setCurrentBoard(boardData.value)
           setCurrentBoardData(boardData)
-          setCurrentDifficulty(boardData.difficulty)
 
           console.log("value",boardData)
           //const keys = await AsyncStorage.getAllKeys();
@@ -72,8 +70,7 @@ export default function SaveBoard() {
               </Pressable>
               
               </View>
-              {(count > 0) && <Text>{currentDifficulty}</Text> }    
-        {count > 0 && <Board gridList={currentBoard} isEditable={false}/>}
+        {count > 0 && <Board gridList={currentBoard} isEditable={false} boardData = {currentBoardData}/>}
 
        
         </View>
@@ -85,7 +82,7 @@ export default function SaveBoard() {
 const styles = StyleSheet.create({
     container: {
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       flexWrap: 'wrap',
       marginTop: 50
       

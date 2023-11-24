@@ -53,8 +53,8 @@ export default function Sudoku() {
               <Text>{t('difficulty.Hard')}</Text>
               </Pressable>
               </View>
-        {(count > 0) && <Text>{t(`difficulty.${currentDifficulty}`)}</Text> }    
         {count > 0 && <Board gridList={currentBoard} isEditable={true} boardData={currentBoardData} />}
+
               </View>
         
     </>
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
       borderColor: 'black',
       borderWidth: 1,
       margin:20,
-      width:100
+      width:65,
+      alignItems:'center'
     },
   });
