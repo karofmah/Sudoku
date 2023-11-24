@@ -1,9 +1,11 @@
 import { StyleSheet, TextInput,Text, View,Button } from 'react-native';
 import SmallBoard from './SmallBoard';
-import { NavigationContainer } from '@react-navigation/native';
+import { useRoute} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState,useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
 const storeData = async (id:number,value:any) => {
@@ -110,13 +112,33 @@ function SaveBoards(){
     storeData(3,hardObject)
   }
 export default function Home({navigation}) {
-    SaveBoards()
+  const {t, i18n} = useTranslation(); 
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('en');
+  const [items, setItems] = useState([
+    {label: 'English', value: 'en'},
+    {label: 'Norsk', value: 'no'},
+  ]);
+  useEffect(() => {
+    i18n.changeLanguage(value);
+  }, [value]);
 
+  
+    SaveBoards()
+    
     return(
         <>
-        <Button title="Play Sudoku" onPress={() => navigation.navigate('Sudoku')}/>
-        <Button title="Add boards" onPress={() => navigation.navigate('Add board')}/>
-
+        <Button title={t('play')}onPress={() => navigation.navigate('Sudoku')}/>
+        <Button title={t('add-boards')} onPress={() => navigation.navigate('Add board')}/>
+        <DropDownPicker
+    
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setItems}
+      />
         </>
     )
 }

@@ -1,0 +1,17 @@
+{
+  "title": "Sudoku",
+
+  "difficulty":{
+    "Easy": "Lett",
+    "Medium": "Middels",
+    "Hard": "Vanskelig"
+  },
+    "generate-board": "Lag startbrett",
+    "save-board": "Lagre startbrett",
+    "play":"Spill Sudoku",
+    "add-boards":"Legg til startbrett",
+    "info":"Trykk 0 for å markere tall du er usikker på, trykk en annen knapp for å fjerne markering",
+    "incorrect":"Svaret ditt er dessverre galt",
+    "correct":"Gratulerer, svaret ditt er korrekt!",
+    "check-answer":"Sjekk svar"
+}

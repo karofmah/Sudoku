@@ -3,6 +3,7 @@ import SmallBoard from './SmallBoard';
 import Board from './Board';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState,useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 export default function Sudoku() {
@@ -10,6 +11,8 @@ export default function Sudoku() {
   const [currentBoard, setCurrentBoard] = useState([]);
   const [currentDifficulty, setCurrentDifficulty] = useState("");
   const[currentBoardData, setCurrentBoardData] = useState({});
+
+  const {t, i18n} = useTranslation(); 
 
   return(
     <>
@@ -24,7 +27,7 @@ export default function Sudoku() {
                 setCount(count + 1)
               }
               }>
-              <Text>Easy board</Text>
+              <Text>{t('difficulty.Easy')}</Text>
               </Pressable>
 
               <Pressable style={styles.button} onPress={async ()=>
@@ -36,7 +39,7 @@ export default function Sudoku() {
                   setCount(count + 1)
                 }
                 }>
-              <Text>Medium board</Text>
+              <Text>{t('difficulty.Medium')}</Text>
               </Pressable>
               <Pressable style={styles.button} onPress={async ()=>
                 {
@@ -47,10 +50,10 @@ export default function Sudoku() {
                   setCount(count + 1)
                 }
                 }>
-              <Text>Hard board</Text>
+              <Text>{t('difficulty.Hard')}</Text>
               </Pressable>
               </View>
-        {(count > 0) && <Text>{currentDifficulty}</Text> }    
+        {(count > 0) && <Text>{t(`difficulty.${currentDifficulty}`)}</Text> }    
         {count > 0 && <Board gridList={currentBoard} isEditable={true} boardData={currentBoardData} />}
               </View>
         

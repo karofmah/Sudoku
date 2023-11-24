@@ -1,13 +1,15 @@
 import { StyleSheet, TextInput,Text, View,Button } from 'react-native';
 import SmallBoard from './SmallBoard';
 import { useState,useEffect } from 'react';
-
+import { useTranslation } from 'react-i18next';
 
 export default function Board(props:any) {
   const [receivedList, setReceivedList] = useState([]);
   const [solved, setSolved] = useState(false)
   const [answerClicked, setAnswerClicked] = useState(false)
   const [mark,setMark] = useState(false)
+
+  const {t} = useTranslation()
 
   useEffect(()=>{
     setAnswerClicked(false)
@@ -57,7 +59,7 @@ export default function Board(props:any) {
       
     </View>
     {props.isEditable &&
-    <Button title="Check Answer" onPress={()=>{
+    <Button title={t("check-answer")} onPress={()=>{
       setAnswerClicked(true)
       const answerListConverted = []
       for (let i = 0; i < 9; i += 3) {
@@ -94,12 +96,12 @@ export default function Board(props:any) {
   }
 
   { (answerClicked && solved) &&
-  <Text>Congratulations, your answer is correct!</Text>
+  <Text>{t("correct")}</Text>
   }
   { (answerClicked && !solved) &&
-  <Text>Unfortunately your answer is incorrect</Text>
+  <Text>{t("incorrect")}</Text>
   }
-    {props.isEditable && <Text>Press 0 to mark cell, press any other key to unmark cell</Text>}
+    {props.isEditable && <Text>{t('info')}</Text>}
 
     </>
   )

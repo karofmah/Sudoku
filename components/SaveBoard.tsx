@@ -2,6 +2,7 @@ import { StyleSheet,Text, View,Pressable } from 'react-native';
 import { useState,useEffect } from 'react';
 import Board from './Board';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from 'react-i18next';
 
 
 const storeData = async (id:number,value:any) => {
@@ -21,6 +22,7 @@ export default function SaveBoard() {
   const [currentBoard, setCurrentBoard] = useState([]);
   const[currentBoardData, setCurrentBoardData] = useState({});
   const [currentDifficulty, setCurrentDifficulty] = useState("");
+  const {t} = useTranslation(); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,10 +39,10 @@ export default function SaveBoard() {
           setCurrentDifficulty(boardData.difficulty)
 
           console.log("value",boardData)
-          const keys = await AsyncStorage.getAllKeys();
-          const result = await AsyncStorage.multiGet(keys)
-          console.log("all",result)
-          console.log("count:",keys.length)
+          //const keys = await AsyncStorage.getAllKeys();
+          //const result = await AsyncStorage.multiGet(keys)
+          //console.log("all",result)
+          //console.log("count:",keys.length)
          
         };
     
@@ -55,7 +57,7 @@ export default function SaveBoard() {
       
         <View style= {styles.container}>
           <Pressable style={styles.button} onPress={()=>setCount(count + 1)}>
-            <Text>Generate board</Text>
+            <Text>{t('generate-board')}</Text>
             </Pressable>
             
             <Pressable style={styles.button} onPress={async ()=>{
@@ -66,7 +68,7 @@ export default function SaveBoard() {
               storeData(count + 3, currentBoardData)
 
             }}>
-              <Text>Save board</Text>
+              <Text>{t('save-board')}</Text>
               </Pressable>
               
               </View>
