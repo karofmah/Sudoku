@@ -42,6 +42,7 @@ const convertRowToBox = (board:any)=>{
 }
 
 export default function Board(props:any) {
+  const [receivedList, setReceivedList] = useState([]);	
   const [solved, setSolved] = useState(false)
   const [answerClicked, setAnswerClicked] = useState(false)
   const [currentDifficulty,setCurrentDifficulty] = useState("")
@@ -73,7 +74,8 @@ export default function Board(props:any) {
   const sudokuGroups = convertRowToBox(board)
 
   const receiveNewList = (list,rowIndex) => {
-
+    setReceivedList(list);	
+    
     answerList[rowIndex] = list
     
     console.log('Received list in parent:', list);
@@ -113,6 +115,8 @@ export default function Board(props:any) {
       console.log(equals(props.boardData.solution,solution))
       console.log(solved)
 
+
+      console.log(props.boardData.solution)
     }} />
   }
 

@@ -85,5 +85,6 @@ const styles = StyleSheet.create({
     
     mark:{
       backgroundColor:'yellow',
+      height:'100%'
     }
   });
