@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 
 const storeData = async (id:number,value:any) => {
   try {
-    console.log("saved")
     const jsonValue = JSON.stringify(value)
     await AsyncStorage.setItem(id.toString(), jsonValue);
   } catch (e) {

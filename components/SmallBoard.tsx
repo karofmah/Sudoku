@@ -39,7 +39,6 @@ export default function SmallBoard(props:any){
               if(e.nativeEvent.key === "0"){
                 updatedStyleList[index] = styles.mark
                 setStyle(updatedStyleList)
-                console.log(updatedStyleList)
               }else{
                 updatedStyleList[index] = {}
                 setStyle(updatedStyleList)

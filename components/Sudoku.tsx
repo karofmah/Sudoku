@@ -1,5 +1,4 @@
 import { StyleSheet, TextInput,Text, View,Pressable } from 'react-native';
-import SmallBoard from './SmallBoard';
 import Board from './Board';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState,useEffect } from 'react';
@@ -20,7 +19,7 @@ export default function Sudoku() {
 
               <Pressable style={styles.button} onPress={ async ()=>{
                 const newBoard = await getRandomBoard('Easy')
-                setCurrentBoard(newBoard.value)
+                setCurrentBoard(await newBoard.value)
                 setCurrentBoardData(newBoard)
                 setCount(count + 1)
               }
@@ -31,7 +30,7 @@ export default function Sudoku() {
               <Pressable style={styles.button} onPress={async ()=>
                 {
                   const newBoard = await getRandomBoard('Medium')
-                  setCurrentBoard(newBoard.value)
+                  setCurrentBoard(await newBoard.value)
                   setCurrentBoardData(newBoard)
                   setCount(count + 1)
                 }
@@ -41,7 +40,7 @@ export default function Sudoku() {
               <Pressable style={styles.button} onPress={async ()=>
                 {
                   const newBoard = await getRandomBoard('Hard')
-                  setCurrentBoard(newBoard.value)
+                  setCurrentBoard(await newBoard.value)
                   setCurrentBoardData(newBoard)
                   setCount(count + 1)
                 }
@@ -61,19 +60,19 @@ async function getRandomBoard(difficulty: string){
   const keys = await AsyncStorage.getAllKeys();
   const boardDataString = await AsyncStorage.multiGet(keys)
   const boardData = []
-  const BoardList = []
-  
+  const boardList = []
+  console.log("string"+boardDataString)
   boardDataString.forEach(element => {
     boardData.push(JSON.parse(element[1]))
   });
   
   boardData.forEach(element => {
-    element.difficulty === difficulty ? BoardList.push(element) : ""
+    element.difficulty === difficulty ? boardList.push(element) : ""
   });
+  console.log("list"+ boardList)
+  const randomBoardIndex = Math.floor(Math.random() * boardList.length);
   
-  const randomBoardIndex = Math.floor(Math.random() * BoardList.length);
-  
-  return BoardList[randomBoardIndex]
+  return boardList[randomBoardIndex]
   
   }
   

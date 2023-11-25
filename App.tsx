@@ -21,10 +21,14 @@ export default function App() {
     <NavigationContainer >
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" options={{
-          title:t('title')
+          title:t('title.sudoku')
         }} component={Home} />
-        <Stack.Screen name="Sudoku" component={Sudoku} />
-        <Stack.Screen name="Add board" component={SaveBoard} />
+        <Stack.Screen name="Sudoku" options = {{
+          title:t('title.play-sudoku')
+        }} component={Sudoku} />
+        <Stack.Screen name="Add boards" options = {{
+          title:t('title.add-boards')
+        }}component={SaveBoard} />
       </Stack.Navigator>
     </NavigationContainer>
     

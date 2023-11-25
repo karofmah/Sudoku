@@ -130,8 +130,8 @@ export default function Home({navigation}) {
         <>
         <View>
 
-        <Button title={t('play')}onPress={() => navigation.navigate('Sudoku')}/>
-        <Button title={t('add-boards')} onPress={() => navigation.navigate('Add board')}/>
+        <Button title={t('title.play-sudoku')}onPress={() => navigation.navigate('Sudoku')}/>
+        <Button title={t('title.add-boards')} onPress={() => navigation.navigate('Add boards')}/>
         <DropDownPicker
         style={styles.dropdown}
         open={open}

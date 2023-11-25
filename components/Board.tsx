@@ -2,7 +2,6 @@ import { StyleSheet, TextInput,Text, View,Button } from 'react-native';
 import SmallBoard from './SmallBoard';
 import { useState,useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { use } from 'i18next';
 
 const checkAnswer = (setAnswerClicked:any,answerList:any,setSolved:any,solution:any)=>{
   setAnswerClicked(true)
@@ -41,6 +40,8 @@ const convertRowToBox = (board:any)=>{
   return sudokuGroups
 }
 
+const equals = (a:number[][], b:number[][]) => JSON.stringify(a) === JSON.stringify(b);
+
 export default function Board(props:any) {
   const [receivedList, setReceivedList] = useState([]);	
   const [solved, setSolved] = useState(false)
@@ -75,7 +76,7 @@ export default function Board(props:any) {
 
   const receiveNewList = (list,rowIndex) => {
     setReceivedList(list);	
-    
+
     answerList[rowIndex] = list
     
     console.log('Received list in parent:', list);
@@ -94,30 +95,7 @@ export default function Board(props:any) {
         <View>
 
     {props.isEditable &&
-    <Button title={t("check-answer")} onPress={()=>{
-      checkAnswer(setAnswerClicked,answerList,setSolved,props.boardData.solution)
-
-
-//TEST THAT IT WORKS WITH THIS CODE
-
-      const solution=
-      [[3, 9, 6, 5, 7, 2, 1, 4, 8], 
-      [2, 1, 7, 4, 6, 8, 5, 3, 9], 
-      [4, 8, 5, 1, 3, 9, 7, 2, 6], 
-      [8, 6, 3, 9, 2, 1, 4, 5, 7], 
-      [5, 4, 9, 3, 8, 7, 2, 6, 1], 
-      [7, 2, 1, 6, 4, 5, 8, 9, 3], 
-      [9, 3, 8, 7, 5, 4, 6, 1, 2], 
-      [1, 7, 4, 2, 9, 6, 3, 8, 5], 
-      [6, 5, 2, 8, 1, 3, 9, 7, 4]]
-      
-      setSolved(equals(props.boardData.solution,solution))
-      console.log(equals(props.boardData.solution,solution))
-      console.log(solved)
-
-
-      console.log(props.boardData.solution)
-    }} />
+    <Button title={t("check-answer")} onPress={()=>{checkAnswer(setAnswerClicked,answerList,setSolved,props.boardData.solution)}} />
   }
 
   { (answerClicked && solved) &&
@@ -134,7 +112,6 @@ export default function Board(props:any) {
     </>
   )
 }
-const equals = (a:number[][], b:number[][]) => JSON.stringify(a) === JSON.stringify(b);
 
 const styles = StyleSheet.create({
     boardContainer: {

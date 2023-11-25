@@ -1,5 +1,9 @@
 {
-    "title": "Sudoku",
+    "title":{
+      "sudoku": "Sudoku",
+      "play-sudoku": "Play Sudoku",
+      "add-boards": "Add start boards"
+    },
 
     "difficulty":{
       "Easy": "Easy",
@@ -9,7 +13,6 @@
       "generate-board": "Create start board",
       "save-board": "Save start board",
       "play":"Play Sudoku",
-      "add-boards":"Add start boards",
       "info":"Press 0 to mark number you are uncertain of, press any other key to unmark",
       "incorrect":"Unfortunately your answer is incorrect",
       "correct":"Congratulations, your answer is correct!",
