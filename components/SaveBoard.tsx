@@ -21,6 +21,7 @@ export default function SaveBoard() {
   const[count,setCount] = useState(0)
   const [currentBoard, setCurrentBoard] = useState([]);
   const[currentBoardData, setCurrentBoardData] = useState({});
+  const [saved,setSaved] = useState(false)
   const {t} = useTranslation(); 
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export default function SaveBoard() {
           .then((response) =>{
             return response.json();
           }).then((error) => {
+            console.log(error)
             return error
           })
           var boardData = json.newboard.grids[0]
@@ -37,10 +39,12 @@ export default function SaveBoard() {
           setCurrentBoardData(boardData)
 
           console.log("value",boardData)
-          //const keys = await AsyncStorage.getAllKeys();
-          //const result = await AsyncStorage.multiGet(keys)
-          //console.log("all",result)
-          //console.log("count:",keys.length)
+
+          setSaved(false)
+          const keys = await AsyncStorage.getAllKeys();
+          const result = await AsyncStorage.multiGet(keys)
+          console.log("all",result)
+          console.log("count:",keys.length)
          
         };
     
@@ -64,14 +68,14 @@ export default function SaveBoard() {
                 if(parseInt(key) === count) return
               })
               storeData(count + 3, currentBoardData)
-
+              setSaved(true)
             }}>
               <Text>{t('save-board')}</Text>
               </Pressable>
               
               </View>
         {count > 0 && <Board gridList={currentBoard} isEditable={false} boardData = {currentBoardData}/>}
-
+        {saved && <Text>{t("saved")}</Text>}
        
         </View>
         

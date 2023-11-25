@@ -13,7 +13,8 @@
       "info":"Press 0 to mark number you are uncertain of, press any other key to unmark",
       "incorrect":"Unfortunately your answer is incorrect",
       "correct":"Congratulations, your answer is correct!",
-      "check-answer":"Check answer"
+      "check-answer":"Check answer",
+      "saved":"This start board is saved!"
 
 
   }

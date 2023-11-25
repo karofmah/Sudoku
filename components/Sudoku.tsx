@@ -9,10 +9,9 @@ import { useTranslation } from 'react-i18next';
 export default function Sudoku() {
   const[count,setCount] = useState(0)
   const [currentBoard, setCurrentBoard] = useState([]);
-  const [currentDifficulty, setCurrentDifficulty] = useState("");
   const[currentBoardData, setCurrentBoardData] = useState({});
 
-  const {t, i18n} = useTranslation(); 
+  const {t} = useTranslation(); 
 
   return(
     <>
@@ -22,7 +21,6 @@ export default function Sudoku() {
               <Pressable style={styles.button} onPress={ async ()=>{
                 const newBoard = await getRandomBoard('Easy')
                 setCurrentBoard(newBoard.value)
-                setCurrentDifficulty(newBoard.difficulty)
                 setCurrentBoardData(newBoard)
                 setCount(count + 1)
               }
@@ -34,7 +32,6 @@ export default function Sudoku() {
                 {
                   const newBoard = await getRandomBoard('Medium')
                   setCurrentBoard(newBoard.value)
-                  setCurrentDifficulty(newBoard.difficulty)
                   setCurrentBoardData(newBoard)
                   setCount(count + 1)
                 }
@@ -45,7 +42,6 @@ export default function Sudoku() {
                 {
                   const newBoard = await getRandomBoard('Hard')
                   setCurrentBoard(newBoard.value)
-                  setCurrentDifficulty(newBoard.difficulty)
                   setCurrentBoardData(newBoard)
                   setCount(count + 1)
                 }
@@ -76,7 +72,6 @@ async function getRandomBoard(difficulty: string){
   });
   
   const randomBoardIndex = Math.floor(Math.random() * BoardList.length);
-  
   
   return BoardList[randomBoardIndex]
   

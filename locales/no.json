@@ -13,5 +13,6 @@
     "info":"Trykk 0 for å markere tall du er usikker på, trykk en annen knapp for å fjerne markering",
     "incorrect":"Svaret ditt er dessverre galt",
     "correct":"Gratulerer, svaret ditt er korrekt!",
-    "check-answer":"Sjekk svar"
+    "check-answer":"Sjekk svar",
+    "saved": "Dette startbrettet er lagret!"
 }
