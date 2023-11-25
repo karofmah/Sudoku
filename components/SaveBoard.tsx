@@ -20,10 +20,6 @@ const onSaveBoard = async (count: number,currentBoardData:any,setSaved:any)=>{
   })
   storeData(count + 3, currentBoardData)
   setSaved(true)
-  const newkeys = await AsyncStorage.getAllKeys();
-const result = await AsyncStorage.multiGet(newkeys)
-console.log("all",result)
-console.log("count:",newkeys.length)
 }
 
 export default function SaveBoard() {
@@ -41,14 +37,9 @@ export default function SaveBoard() {
           }).then((error) => {
             return error
           })
-          console.log("json" + json)
-
           var boardData = json.newboard.grids[0]
           
           setCurrentBoardData(boardData)
-
-          console.log("value",boardData)
-
           setSaved(false)
          
         };
