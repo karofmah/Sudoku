@@ -11,15 +11,25 @@ const storeData = async (id:number,value:any) => {
     const jsonValue = JSON.stringify(value)
     await AsyncStorage.setItem(id.toString(), jsonValue);
   } catch (e) {
-    // saving error
-  }
+    console.log(e)
+    }
 };
-
+const onSaveBoard = async (count: number,currentBoardData:any,setSaved:any)=>{
+  const keys = await AsyncStorage.getAllKeys();
+  keys.forEach((key)=>{
+    if(parseInt(key) === count) return
+  })
+  storeData(count + 3, currentBoardData)
+  setSaved(true)
+  const newkeys = await AsyncStorage.getAllKeys();
+const result = await AsyncStorage.multiGet(newkeys)
+console.log("all",result)
+console.log("count:",newkeys.length)
+}
 
 export default function SaveBoard() {
 
   const[count,setCount] = useState(0)
-  const [currentBoard, setCurrentBoard] = useState([]);
   const[currentBoardData, setCurrentBoardData] = useState({});
   const [saved,setSaved] = useState(false)
   const {t} = useTranslation(); 
@@ -30,21 +40,17 @@ export default function SaveBoard() {
           .then((response) =>{
             return response.json();
           }).then((error) => {
-            console.log(error)
             return error
           })
+          console.log("json" + json)
+
           var boardData = json.newboard.grids[0]
           
-          setCurrentBoard(boardData.value)
           setCurrentBoardData(boardData)
 
           console.log("value",boardData)
 
           setSaved(false)
-          const keys = await AsyncStorage.getAllKeys();
-          const result = await AsyncStorage.multiGet(keys)
-          console.log("all",result)
-          console.log("count:",keys.length)
          
         };
     
@@ -62,20 +68,14 @@ export default function SaveBoard() {
             <Text>{t('generate-board')}</Text>
             </Pressable>
             
-            <Pressable style={styles.button} onPress={async ()=>{
-              const keys = await AsyncStorage.getAllKeys();
-              keys.forEach((key)=>{
-                if(parseInt(key) === count) return
-              })
-              storeData(count + 3, currentBoardData)
-              setSaved(true)
+            <Pressable style={styles.button} onPress={()=>{onSaveBoard(count,currentBoardData,setSaved)
             }}>
               <Text>{t('save-board')}</Text>
               </Pressable>
               
               </View>
-        {count > 0 && <Board gridList={currentBoard} isEditable={false} boardData = {currentBoardData}/>}
-        {saved && <Text>{t("saved")}</Text>}
+        {(count > 0 && !(Object.keys(currentBoardData).length === 0)) && <Board isEditable={false} boardData = {currentBoardData}/>}
+        {(count > 0 && saved) && <Text>{t("saved")}</Text>}
        
         </View>
         

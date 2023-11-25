@@ -4,39 +4,26 @@ import { useState,useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { use } from 'i18next';
 
-export default function Board(props:any) {
-  const [receivedList, setReceivedList] = useState([]);
-  const [solved, setSolved] = useState(false)
-  const [answerClicked, setAnswerClicked] = useState(false)
-  const [currentDifficulty,setCurrentDifficulty] = useState("")
+const checkAnswer = (setAnswerClicked:any,answerList:any,setSolved:any,solution:any)=>{
+  setAnswerClicked(true)
 
-  const {t} = useTranslation()
-
-  useEffect(()=>{
-    setAnswerClicked(false)
-    const difficulty = props.boardData.difficulty
-    setCurrentDifficulty(difficulty)
-  },[props.boardData])
+  const answerListConverted = convertBoxToRow(answerList)
   
-  const [answerList] = useState(
-    [[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]])
-
-  const receiveNewList = (list,rowIndex) => {
-    setReceivedList(list);
-
-    answerList[rowIndex] = list
-    
-    console.log('Received list in parent:', list);
-  };
-
+  setSolved(equals(solution, answerListConverted))
+}
+const convertBoxToRow = (answerList:any)=>{
+  const answerListConverted = []
+  for (let i = 0; i < 9; i += 3) {
+    const row1 = answerList[i].slice(0, 3).concat(answerList[i + 1].slice(0, 3), answerList[i + 2].slice(0, 3));
+    const row2 = answerList[i].slice(3, 6).concat(answerList[i + 1].slice(3, 6), answerList[i + 2].slice(3, 6));
+    const row3 = answerList[i].slice(6, 9).concat(answerList[i + 1].slice(6, 9), answerList[i + 2].slice(6, 9));
+  
+    answerListConverted.push(row1, row2, row3);
+  }
+  return answerListConverted
+}
+const convertRowToBox = (board:any)=>{
+  
   const sudokuGroups = [];
 
   for (let i = 0; i < 9; i += 3) {
@@ -45,12 +32,53 @@ export default function Board(props:any) {
       
       for (let k = i; k < i + 3; k++) {
         for (let l = j; l < j + 3; l++) {
-          group.push(props.gridList[k][l]);
+          group.push(board[k][l]);
         }
       }
       sudokuGroups.push(group);
     }
   }
+  return sudokuGroups
+}
+
+export default function Board(props:any) {
+  const [solved, setSolved] = useState(false)
+  const [answerClicked, setAnswerClicked] = useState(false)
+  const [currentDifficulty,setCurrentDifficulty] = useState("")
+  const {t} = useTranslation()
+
+  const emptyList = 
+  [[0, 0, 0, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+  const [answerList] = useState(emptyList)
+    
+  const boardData = props.boardData
+  const board = boardData.value
+
+  useEffect(()=>{
+    setAnswerClicked(false)
+    const difficulty = props.boardData.difficulty
+    setCurrentDifficulty(difficulty)
+  },[props.boardData])
+  
+
+  const sudokuGroups = convertRowToBox(board)
+
+  const receiveNewList = (list,rowIndex) => {
+
+    answerList[rowIndex] = list
+    
+    console.log('Received list in parent:', list);
+  };
+
 
   return(
     <>
@@ -58,25 +86,18 @@ export default function Board(props:any) {
     {<Text style={styles.difficulty}>{t(`difficulty.${currentDifficulty}`)}</Text> }    
       <View style={styles.boardContainer}>
     {sudokuGroups.map((item,index) => (
-    <SmallBoard key = {index} gridGroup={item} isEditable={props.isEditable} oldList={item} index={index} sendListToParent={receiveNewList} board={props.gridList}/>
+    <SmallBoard key = {index} gridGroup={item} isEditable={props.isEditable} oldList={item} index={index} sendListToParent={receiveNewList} board={board}/>
         ))}
         </View>
         <View>
 
     {props.isEditable &&
     <Button title={t("check-answer")} onPress={()=>{
-      setAnswerClicked(true)
-      const answerListConverted = []
-      for (let i = 0; i < 9; i += 3) {
-        const row1 = answerList[i].slice(0, 3).concat(answerList[i + 1].slice(0, 3), answerList[i + 2].slice(0, 3));
-        const row2 = answerList[i].slice(3, 6).concat(answerList[i + 1].slice(3, 6), answerList[i + 2].slice(3, 6));
-        const row3 = answerList[i].slice(6, 9).concat(answerList[i + 1].slice(6, 9), answerList[i + 2].slice(6, 9));
-      
-        answerListConverted.push(row1, row2, row3);
-      }
-      
+      checkAnswer(setAnswerClicked,answerList,setSolved,props.boardData.solution)
 
-      setSolved(equals(props.boardData.solution, answerListConverted))
+
+//TEST THAT IT WORKS WITH THIS CODE
+
       const solution=
       [[3, 9, 6, 5, 7, 2, 1, 4, 8], 
       [2, 1, 7, 4, 6, 8, 5, 3, 9], 
@@ -88,15 +109,10 @@ export default function Board(props:any) {
       [1, 7, 4, 2, 9, 6, 3, 8, 5], 
       [6, 5, 2, 8, 1, 3, 9, 7, 4]]
       
-/* TEST THAT IT WORKS WITH THIS CODE
-      //setSolved(equals(props.boardData.solution,solution))
+      setSolved(equals(props.boardData.solution,solution))
       console.log(equals(props.boardData.solution,solution))
       console.log(solved)
 
-      console.log(answerListConverted)
-      console.log("before conversion",answerList)
-
-      console.log(props.boardData.solution)*/
     }} />
   }
 

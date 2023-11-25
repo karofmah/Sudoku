@@ -81,11 +81,9 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         width:'33.3%',
         height: '33.3%',
-        fontSize:30,
     },
     
     mark:{
-      backgroundColor:'orange',
-      height:'100%',
+      backgroundColor:'yellow',
     }
   });
