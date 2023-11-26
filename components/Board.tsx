@@ -23,7 +23,7 @@ const convertBoxToRow = (answerList:any)=>{
 }
 const convertRowToBox = (board:any)=>{
   
-  const sudokuGroups = [];
+  const groups = [];
 
   for (let i = 0; i < 9; i += 3) {
     for (let j = 0; j < 9; j += 3) {
@@ -34,10 +34,10 @@ const convertRowToBox = (board:any)=>{
           group.push(board[k][l]);
         }
       }
-      sudokuGroups.push(group);
+      groups.push(group);
     }
   }
-  return sudokuGroups
+  return groups
 }
 
 const equals = (a:number[][], b:number[][]) => JSON.stringify(a) === JSON.stringify(b);
@@ -72,7 +72,7 @@ export default function Board(props:any) {
   },[props.boardData])
   
 
-  const sudokuGroups = convertRowToBox(board)
+  const groups = convertRowToBox(board)
 
   const receiveNewList = (list,rowIndex) => {
     setReceivedList(list);	
@@ -88,7 +88,7 @@ export default function Board(props:any) {
     <View style={styles.container}>
     {<Text style={styles.difficulty}>{t(`difficulty.${currentDifficulty}`)}</Text> }    
       <View style={styles.boardContainer}>
-    {sudokuGroups.map((item,index) => (
+    {groups.map((item,index) => (
     <SmallBoard key = {index} gridGroup={item} isEditable={props.isEditable} oldList={item} index={index} sendListToParent={receiveNewList} board={board}/>
         ))}
         </View>

@@ -20,6 +20,11 @@ const onSaveBoard = async (count: number,currentBoardData:any,setSaved:any)=>{
   })
   storeData(count + 3, currentBoardData)
   setSaved(true)
+  const newkeys = await AsyncStorage.getAllKeys();
+  const values = await AsyncStorage.multiGet(newkeys)
+  console.log("storage count: " + (values.length - 1))
+  
+
 }
 
 export default function SaveBoard() {
@@ -28,6 +33,7 @@ export default function SaveBoard() {
   const[currentBoardData, setCurrentBoardData] = useState({});
   const [saved,setSaved] = useState(false)
   const {t} = useTranslation(); 
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,12 +47,21 @@ export default function SaveBoard() {
           
           setCurrentBoardData(boardData)
           setSaved(false)
-         
-        };
+          
+          const count = await AsyncStorage.getItem('0')
+          .then((response)=>{
+            return response
+          }).then((error) => {
+            return error
+          })
+
+          setCount(parseInt(count))
+          };
     
         fetchData()
       
       }, [count])
+
      
 
   return(
@@ -54,11 +69,18 @@ export default function SaveBoard() {
     <View style={styles.container}>
       
         <View style= {styles.container}>
-          <Pressable style={styles.button} onPress={()=>setCount(count + 1)}>
+          <Pressable style={styles.button} onPress={async ()=>{
+              storeData(0,count + 1)
+              const newCount = await AsyncStorage.getItem('0')
+              setCount(parseInt(newCount))
+              console.log(newCount)
+            }}>
             <Text>{t('generate-board')}</Text>
             </Pressable>
             
-            <Pressable style={styles.button} onPress={()=>{onSaveBoard(count,currentBoardData,setSaved)
+            <Pressable style={styles.button} onPress={async ()=>{
+              console.log("id count: " + count)
+              onSaveBoard(count,currentBoardData,setSaved)
             }}>
               <Text>{t('save-board')}</Text>
               </Pressable>

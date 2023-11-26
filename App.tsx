@@ -7,8 +7,8 @@ import Home from './components/Home';
 import Sudoku from './components/Sudoku';
 import {useTranslation} from 'react-i18next';
 import './locales/i18n';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {useState,useEffect} from 'react'
+
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
