@@ -29,7 +29,7 @@ const onSaveBoard = async (count: number,currentBoardData:any,setSaved:any)=>{
 
 export default function SaveBoard() {
 
-  const[count,setCount] = useState(0)
+  const[count,setCount] = useState(4)
   const[currentBoardData, setCurrentBoardData] = useState({});
   const [saved,setSaved] = useState(false)
   const {t} = useTranslation(); 
@@ -48,22 +48,21 @@ export default function SaveBoard() {
           setCurrentBoardData(boardData)
           setSaved(false)
           
-          const count = await AsyncStorage.getItem('0')
+          const newCount = await AsyncStorage.getItem('0')
           .then((response)=>{
             return response
           }).then((error) => {
             return error
           })
 
-          setCount(parseInt(count))
+          setCount(parseInt(newCount))
+          console.log(newCount)
           };
     
         fetchData()
-      
+
       }, [count])
-
-     
-
+    
   return(
     <>
     <View style={styles.container}>
