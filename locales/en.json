@@ -1,0 +1,23 @@
+{
+    "title":{
+      "sudoku": "Sudoku",
+      "play-sudoku": "Play Sudoku",
+      "add-boards": "Add start boards"
+    },
+
+    "difficulty":{
+      "Easy": "Easy",
+      "Medium": "Medium",
+      "Hard": "Hard"
+    },
+      "generate-board": "Create start board",
+      "save-board": "Save start board",
+      "play":"Play Sudoku",
+      "info":"Press 0 to mark number you are uncertain of, press any other key to unmark",
+      "incorrect":"Unfortunately your answer is incorrect",
+      "correct":"Congratulations, your answer is correct!",
+      "check-answer":"Check answer",
+      "saved":"This start board is saved!"
+
+
+  }

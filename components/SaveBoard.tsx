@@ -2,25 +2,38 @@ import { StyleSheet,Text, View,Pressable } from 'react-native';
 import { useState,useEffect } from 'react';
 import Board from './Board';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from 'react-i18next';
 
 
 const storeData = async (id:number,value:any) => {
   try {
-    console.log("saved")
     const jsonValue = JSON.stringify(value)
     await AsyncStorage.setItem(id.toString(), jsonValue);
   } catch (e) {
-    // saving error
-  }
+    console.log(e)
+    }
 };
+const onSaveBoard = async (count: number,currentBoardData:any,setSaved:any)=>{
+  const keys = await AsyncStorage.getAllKeys();
+  keys.forEach((key)=>{
+    if(parseInt(key) === count) return
+  })
+  storeData(count + 3, currentBoardData)
+  setSaved(true)
+  const newkeys = await AsyncStorage.getAllKeys();
+  const values = await AsyncStorage.multiGet(newkeys)
+  console.log("storage count: " + (values.length - 1))
+  
 
+}
 
 export default function SaveBoard() {
 
   const[count,setCount] = useState(0)
-  const [currentBoard, setCurrentBoard] = useState([]);
   const[currentBoardData, setCurrentBoardData] = useState({});
-  const [currentDifficulty, setCurrentDifficulty] = useState("");
+  const [saved,setSaved] = useState(false)
+  const {t} = useTranslation(); 
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,22 +44,24 @@ export default function SaveBoard() {
             return error
           })
           var boardData = json.newboard.grids[0]
-
-          setCurrentBoard(boardData.value)
+          
           setCurrentBoardData(boardData)
-          setCurrentDifficulty(boardData.difficulty)
+          setSaved(false)
+          
+          const count = await AsyncStorage.getItem('0')
+          .then((response)=>{
+            return response
+          }).then((error) => {
+            return error
+          })
 
-          console.log("value",boardData)
-          const keys = await AsyncStorage.getAllKeys();
-          const result = await AsyncStorage.multiGet(keys)
-          console.log("all",result)
-          console.log("count:",keys.length)
-         
-        };
+          setCount(parseInt(count))
+          };
     
         fetchData()
       
       }, [count])
+
      
 
   return(
@@ -54,25 +69,25 @@ export default function SaveBoard() {
     <View style={styles.container}>
       
         <View style= {styles.container}>
-          <Pressable style={styles.button} onPress={()=>setCount(count + 1)}>
-            <Text>Generate board</Text>
+          <Pressable style={styles.button} onPress={async ()=>{
+              storeData(0,count + 1)
+              const newCount = await AsyncStorage.getItem('0')
+              setCount(parseInt(newCount))
+              console.log(newCount)
+            }}>
+            <Text>{t('generate-board')}</Text>
             </Pressable>
             
             <Pressable style={styles.button} onPress={async ()=>{
-              const keys = await AsyncStorage.getAllKeys();
-              keys.forEach((key)=>{
-                if(parseInt(key) === count) return
-              })
-              storeData(count + 3, currentBoardData)
-
+              console.log("id count: " + count)
+              onSaveBoard(count,currentBoardData,setSaved)
             }}>
-              <Text>Save board</Text>
+              <Text>{t('save-board')}</Text>
               </Pressable>
               
               </View>
-              {(count > 0) && <Text>{currentDifficulty}</Text> }    
-        {count > 0 && <Board gridList={currentBoard} isEditable={false}/>}
-
+        {(count > 0 && !(Object.keys(currentBoardData).length === 0)) && <Board isEditable={false} boardData = {currentBoardData}/>}
+        {(count > 0 && saved) && <Text>{t("saved")}</Text>}
        
         </View>
         
@@ -83,7 +98,7 @@ export default function SaveBoard() {
 const styles = StyleSheet.create({
     container: {
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       flexWrap: 'wrap',
       marginTop: 50
       

@@ -1,9 +1,11 @@
 import { StyleSheet, TextInput,Text, View,Button } from 'react-native';
 import SmallBoard from './SmallBoard';
-import { NavigationContainer } from '@react-navigation/native';
+import { useRoute} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState,useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
 const storeData = async (id:number,value:any) => {
@@ -24,10 +26,12 @@ const storeData = async (id:number,value:any) => {
     }
   
   }
-function SaveBoards(){
+async function SaveData(){
 
     clearAll()
   
+    console.log("CLEAR")
+
     const easyObject={
   
       value:
@@ -58,6 +62,7 @@ function SaveBoards(){
   
     const mediumObject={
       difficulty: 'Medium', 
+
       solution: 
       [[1, 2, 6, 7, 3, 8, 9, 5, 4], 
       [7, 4, 9, 5, 6, 1, 2, 3, 8], 
@@ -67,16 +72,18 @@ function SaveBoards(){
       [5, 9, 7, 3, 1, 2, 4, 8, 6], 
       [2, 3, 5, 6, 7, 4, 8, 9, 1], 
       [4, 6, 8, 1, 9, 3, 5, 7, 2], 
-        [9, 7, 1, 8, 2, 5, 6, 4, 3]], 
-        value: [[1, 0, 6, 0, 0, 0, 0, 5, 0], 
-        [0, 4, 0, 5, 0, 0, 0, 0, 0], 
-        [0, 0, 3, 0, 0, 9, 1, 6, 0], 
-        [6, 0, 0, 9, 8, 7, 3, 2, 0], 
-        [0, 0, 0, 4, 0, 6, 0, 0, 0], 
-        [0, 9, 0, 0, 1, 2, 0, 8, 6], 
-        [2, 3, 5, 6, 0, 0, 0, 9, 0], 
-        [0, 0, 0, 0, 9, 0, 5, 0, 2], 
-        [0, 7, 1, 8, 2, 5, 0, 0, 3]]}
+      [9, 7, 1, 8, 2, 5, 6, 4, 3]], 
+
+      value: 
+      [[1, 0, 6, 0, 0, 0, 0, 5, 0], 
+      [0, 4, 0, 5, 0, 0, 0, 0, 0], 
+      [0, 0, 3, 0, 0, 9, 1, 6, 0], 
+      [6, 0, 0, 9, 8, 7, 3, 2, 0], 
+      [0, 0, 0, 4, 0, 6, 0, 0, 0], 
+      [0, 9, 0, 0, 1, 2, 0, 8, 6], 
+      [2, 3, 5, 6, 0, 0, 0, 9, 0], 
+      [0, 0, 0, 0, 9, 0, 5, 0, 2], 
+      [0, 7, 1, 8, 2, 5, 0, 0, 3]]}
   
   const hardObject={
     
@@ -108,14 +115,41 @@ function SaveBoards(){
     storeData(1,easyObject)
     storeData(2,mediumObject)
     storeData(3,hardObject)
+    storeData(0,4)
+    
   }
 export default function Home({navigation}) {
-    SaveBoards()
+  const {t, i18n} = useTranslation(); 
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('en');
+  const [items, setItems] = useState([
+    {label: 'English', value: 'en'},
+    {label: 'Norsk', value: 'no'},
+  ]);
+  useEffect(() => {
+    i18n.changeLanguage(value);
+  }, [value]);
 
+  
+    SaveData()
+
+    
     return(
         <>
-        <Button title="Play Sudoku" onPress={() => navigation.navigate('Sudoku')}/>
-        <Button title="Add boards" onPress={() => navigation.navigate('Add board')}/>
+        <View>
+
+        <Button title={t('title.play-sudoku')}onPress={() => navigation.navigate('Sudoku')}/>
+        <Button title={t('title.add-boards')} onPress={() => navigation.navigate('Add boards')}/>
+        <DropDownPicker
+        style={styles.dropdown}
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setItems}
+      />
+      </View>
 
         </>
     )
@@ -126,4 +160,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       flexWrap: 'wrap',
     },
+    dropdown:{
+      marginTop:400
+    }
   });

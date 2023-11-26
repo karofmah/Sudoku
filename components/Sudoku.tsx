@@ -1,59 +1,55 @@
 import { StyleSheet, TextInput,Text, View,Pressable } from 'react-native';
-import SmallBoard from './SmallBoard';
 import Board from './Board';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState,useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
-export default function Play() {
+export default function Sudoku() {
   const[count,setCount] = useState(0)
   const [currentBoard, setCurrentBoard] = useState([]);
-  const [currentDifficulty, setCurrentDifficulty] = useState("");
   const[currentBoardData, setCurrentBoardData] = useState({});
+
+  const {t} = useTranslation(); 
 
   return(
     <>
     <View style={styles.container}>
-      
-
         <View style= {styles.container}>
 
               <Pressable style={styles.button} onPress={ async ()=>{
                 const newBoard = await getRandomBoard('Easy')
-                setCurrentBoard(newBoard.value)
-                setCurrentDifficulty(newBoard.difficulty)
+                setCurrentBoard(await newBoard.value)
                 setCurrentBoardData(newBoard)
                 setCount(count + 1)
               }
               }>
-              <Text>Easy board</Text>
+              <Text>{t('difficulty.Easy')}</Text>
               </Pressable>
 
               <Pressable style={styles.button} onPress={async ()=>
                 {
                   const newBoard = await getRandomBoard('Medium')
-                  setCurrentBoard(newBoard.value)
-                  setCurrentDifficulty(newBoard.difficulty)
+                  setCurrentBoard(await newBoard.value)
                   setCurrentBoardData(newBoard)
                   setCount(count + 1)
                 }
                 }>
-              <Text>Medium board</Text>
+              <Text>{t('difficulty.Medium')}</Text>
               </Pressable>
               <Pressable style={styles.button} onPress={async ()=>
                 {
                   const newBoard = await getRandomBoard('Hard')
-                  setCurrentBoard(newBoard.value)
-                  setCurrentDifficulty(newBoard.difficulty)
+                  setCurrentBoard(await newBoard.value)
                   setCurrentBoardData(newBoard)
                   setCount(count + 1)
                 }
                 }>
-              <Text>Hard board</Text>
+              <Text>{t('difficulty.Hard')}</Text>
               </Pressable>
               </View>
-        {(count > 0) && <Text>{currentDifficulty}</Text> }    
         {count > 0 && <Board gridList={currentBoard} isEditable={true} boardData={currentBoardData} />}
+
               </View>
         
     </>
@@ -64,24 +60,19 @@ async function getRandomBoard(difficulty: string){
   const keys = await AsyncStorage.getAllKeys();
   const boardDataString = await AsyncStorage.multiGet(keys)
   const boardData = []
-  const BoardList = []
-  
+  const boardList = []
+  console.log("string"+boardDataString)
   boardDataString.forEach(element => {
     boardData.push(JSON.parse(element[1]))
   });
   
-  console.log("boardData: ",boardData)
   boardData.forEach(element => {
-    element.difficulty === difficulty ? BoardList.push(element) : ""
+    element.difficulty === difficulty ? boardList.push(element) : ""
   });
-  console.log("BoardList: ",BoardList)
+  console.log("list"+ boardList)
+  const randomBoardIndex = Math.floor(Math.random() * boardList.length);
   
-  const randomBoardIndex = Math.floor(Math.random() * BoardList.length);
-  
-  console.log(randomBoardIndex)
-  
-  console.log("newboard",BoardList[randomBoardIndex].value)
-  return BoardList[randomBoardIndex]
+  return boardList[randomBoardIndex]
   
   }
   
@@ -95,6 +86,7 @@ const styles = StyleSheet.create({
       borderColor: 'black',
       borderWidth: 1,
       margin:20,
-      width:100
+      width:65,
+      alignItems:'center'
     },
   });
