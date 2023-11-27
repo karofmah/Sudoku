@@ -1,8 +1,10 @@
 {
   "title":{
-    "sudoku": "Sudoku",
+    "home": "Hjem",
     "play-sudoku": "Spill Sudoku",
-    "add-boards": "Legg til startbrett"
+    "add-boards": "Legg til startbrett",
+    "user-manual": "Bruksanvisning"
+
   },
   "difficulty":{
     "Easy": "Lett",
@@ -16,5 +18,10 @@
     "incorrect":"Svaret ditt er dessverre galt",
     "correct":"Gratulerer, svaret ditt er korrekt!",
     "check-answer":"Sjekk svar",
-    "saved": "Dette startbrettet er lagret!"
+    "saved": "Dette startbrettet er lagret!",
+    "manual-one": "Velkommen til min Sudoku-app! På hjemmesiden kan du velge mellom ulike seksjoner.",
+    "manual-two":"Når du går inn i den første seksjonen, kan du spille sudoku. I denne seksjonen kan du velge mellom tre forskjellige vanskelighetsgrader: 'lett', 'middels' og 'vanskelig'. Avhengig av hvilken du velger, vil du få et sudoku-brett med den vanskelighetsgraden. For å begynne å løse brettet, har du muligheten til å velge en celle og skrive inn eller fjerne et tall ved å bruke tastaturet ditt. Hvis du vil markere et tall du er usikker på, vennligst tast '0' på tastaturet ditt. Cellen din vil bli farget, og for å fjerne denne markeringen kan du trykke på en annen tast. Når du er ferdig med å løse brettet, kan du trykke på knappen 'sjekk svar'. Du er velkommen til å redigere svaret ditt eller få et nytt brett med ønsket vanskelighetsgrad!",
+    "manual-three":"Når du går inn i den andre seksjonen, kan du legge til startbrett. I denne seksjonen har du to alternativer. Det første er å trykke på knappen 'Lag startbrett' for å generere et nytt startbrett. Du kan trykke på denne knappen så mange ganger du vil, til du er fornøyd med brettet. Deretter kan du lagre dette brettet ved å trykke på knappen 'Lagre startbrett'. Dette vil lagre startbrettet som vises på skjermen. Hvis du navigerer til å spille sudoku, har du sjansen til å få dette nye brettet!",
+    "manual-four":"På bunnen av hjemskjermen har du muligheten til å endre språk mellom engelsk og norsk. Velg språket du foretrekker og ha det gøy!"
+
 }

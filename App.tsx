@@ -7,7 +7,7 @@ import Home from './components/Home';
 import Sudoku from './components/Sudoku';
 import {useTranslation} from 'react-i18next';
 import './locales/i18n';
-
+import Manual from './components/Manual';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +21,7 @@ export default function App() {
     <NavigationContainer >
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" options={{
-          title:t('title.sudoku')
+          title:t('title.home')
         }} component={Home} />
         <Stack.Screen name="Sudoku" options = {{
           title:t('title.play-sudoku')
@@ -29,6 +29,9 @@ export default function App() {
         <Stack.Screen name="Add boards" options = {{
           title:t('title.add-boards')
         }}component={SaveBoard} />
+        <Stack.Screen name="User manual" options = {{
+          title:t('title.user-manual')
+        }}component={Manual} />
       </Stack.Navigator>
     </NavigationContainer>
     

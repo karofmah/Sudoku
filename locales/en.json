@@ -1,8 +1,9 @@
 {
     "title":{
-      "sudoku": "Sudoku",
+      "home": "Home",
       "play-sudoku": "Play Sudoku",
-      "add-boards": "Add start boards"
+      "add-boards": "Add start boards",
+      "user-manual": "User manual"
     },
 
     "difficulty":{
@@ -17,7 +18,12 @@
       "incorrect":"Unfortunately your answer is incorrect",
       "correct":"Congratulations, your answer is correct!",
       "check-answer":"Check answer",
-      "saved":"This start board is saved!"
+      "saved":"This start board is saved!",
+      "manual-one":"Welcome to my Sudoku App! In the home page you may choose between different sections.",
+      "manual-two":"When you enter the first section, you are able to play sudoku. In this section you may select one of three difficulties among 'easy', 'medium' and 'hard'. Depending on which you select, you will get a sudoku board of that difficulty. To begin to solve the board, you have the option to select a cell, and enter or remove a number by using your keyboard. If you want to mark a number you are uncertain of, please enter '0' on your keyboard. Your cell will be colored, and to remove this mark you can press any other key. When you are finished solving the board, you may press the button 'check answer'. Please feel free to try again, or get a new board of the difficulty you wish!",
+      "manual-three":"When you enter the second section, you are able to add start boards. In this section you have two options. The first is to press the button 'Create start board' to generate a new start board. You can press this button as many times as you want, until you are satisfied with the board. Then you may save this board by pressing the button 'Save start board'. This will save the start board that is displayed on the screen. If you navigate to play sudoku, you have a chance to get this new board!",
+      "manual-four":"On the bottom of the home screen, you have the option to change language between English and Norwegian. Choose the language you prefer and have fun!"
+      
 
 
   }
